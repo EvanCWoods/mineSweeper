@@ -1,40 +1,50 @@
-let ROWS = 18;
-let COLUMNS = 18;
-let SIZE = 24;
+let ROWS = 2;
+let COLUMNS = 2;
+let SIZE = 30;
+
+let tileAttributes = [];
 
 let canvas = document.getElementById("canvas");
 
 // Function to create the buttons
-function createButtons() {
-    canvas.style.width = ROWS * SIZE + "px";
-    canvas.style.height = COLUMNS * SIZE + "px";
-    for (let i=0; i< ROWS; i++) {
-        for (let j=0; j<COLUMNS; j++) {
-            let btn = document.createElement("button");
-            btn.classList.add("btn");
-            btn.style.float = "left";
-            btn.style.width = SIZE + "px";
-            btn.style.height = SIZE + "px";
-            canvas.appendChild(btn);
+function createTiles() {
+  canvas.style.width = ROWS * SIZE + "px";
+  canvas.style.height = COLUMNS * SIZE + "px";
+  for (let i = 0; i < ROWS; i++) {
+    for (let j = 0; j < COLUMNS; j++) {
+      let tile = document.createElement("button");
+      let attributes = {
+        row: i,
+        column: j,
+        id: "btn" + i + "-" + j,
+      };
+      tileAttributes.push(attributes);
+      tile.classList.add("btn");
+      tile.setAttribute("id", attributes.id);
+      tile.style.float = "left";
+      tile.style.width = SIZE + "px";
+      tile.style.height = SIZE + "px";
+      canvas.appendChild(tile);
 
-            btn.addEventListener("click", function() {
-                btn.disabled = true;
-                updateButtons(btn);
-            });
-        }
+      tile.addEventListener("click", function () {
+        tile.disabled = true;
+        updateTiles(tile);
+      });
     }
+  }
 }
 
 // Function to update buttons on click to show the value under it
-function updateButtons(button) {
-    if (button.disabled = true) {
-        button.textContent = 1;
-    }
+function updateTiles(tile) {
+  if (tile.disabled = true) {
+    tile.textContent = 1;
+  }
 }
 
 // main function to execute the game logic
 function main() {
-    createButtons();
+  createTiles();
+  console.log(tileAttributes);
 }
 
 main();
