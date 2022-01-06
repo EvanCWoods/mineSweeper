@@ -6,6 +6,16 @@ let tileAttributes = [];
 
 let canvas = document.getElementById("canvas");
 
+//  Function to set whether the tile has a bomb or not
+function hasBomb() {
+    let bomb = false;
+    let value = Math.floor(Math.random() * 10);
+    if (value == 0) {
+        bomb = true;
+    }
+    return bomb;
+}
+
 // Function to create the buttons
 function createTiles() {
   canvas.style.width = ROWS * SIZE + "px";
@@ -13,10 +23,12 @@ function createTiles() {
   for (let i = 0; i < ROWS; i++) {
     for (let j = 0; j < COLUMNS; j++) {
       let tile = document.createElement("button");
+      let bomb = hasBomb();
       let attributes = {
         row: i,
         column: j,
         id: "btn" + i + "-" + j,
+        bomb: bomb
       };
       tileAttributes.push(attributes);
       tile.classList.add("btn");
@@ -38,6 +50,14 @@ function createTiles() {
 function updateTiles(tile) {
   if (tile.disabled = true) {
     tile.textContent = 1;
+    for (let i=0; i<tileAttributes.length; i++) { // Logic for checking what value a tile has (bomb, 1-8) 
+        if (tile.id === tileAttributes[i].id) {
+            console.log(tileAttributes[i]);
+            if (tileAttributes[i].bomb == true) {
+                prompt("game over");
+            }
+        }
+    }
   }
 }
 
