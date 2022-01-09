@@ -1,19 +1,20 @@
-let ROWS = 2;
-let COLUMNS = 2;
+// Global variables for game variables
+let ROWS = 18;
+let COLUMNS = 18;
 let SIZE = 30;
-
 let tileAttributes = [];
 
+// Global variables for query selectors
 let canvas = document.getElementById("canvas");
 
-//  Function to set whether the tile has a bomb or not
+//  Function to set whether the tile has a bomb or not (10% chance of being true)
 function hasBomb() {
-    let bomb = false;
-    let value = Math.floor(Math.random() * 10);
-    if (value == 0) {
-        bomb = true;
-    }
-    return bomb;
+  let bomb = false;
+  let value = Math.floor(Math.random() * 5);
+  if (value == 0) {
+    bomb = true;
+  }
+  return bomb;
 }
 
 // Function to create the buttons
@@ -28,7 +29,7 @@ function createTiles() {
         row: i,
         column: j,
         id: "btn" + i + "-" + j,
-        bomb: bomb
+        bomb: bomb,
       };
       tileAttributes.push(attributes);
       tile.classList.add("btn");
@@ -48,17 +49,53 @@ function createTiles() {
 
 // Function to update buttons on click to show the value under it
 function updateTiles(tile) {
-  if (tile.disabled = true) {
-    tile.textContent = 1;
-    for (let i=0; i<tileAttributes.length; i++) { // Logic for checking what value a tile has (bomb, 1-8) 
-        if (tile.id === tileAttributes[i].id) {
-            console.log(tileAttributes[i]);
-            if (tileAttributes[i].bomb == true) {
-                prompt("game over");
-            }
+  displayNumber = 0;
+
+  if ((tile.disabled = true)) {
+    for (let i = 0; i < tileAttributes.length; i++) {
+      // Logic for checking what value a tile has (bomb, 0-5)
+      if (tile.id === tileAttributes[i].id) {
+        console.log(tileAttributes[i]);
+        if (tileAttributes[i-COLUMNS].row >= 0) {
+          if (tileAttributes[i].bomb == true) { 
+            tile.textContent = "💣";
+            alert("Game Over");
+          }
         }
+        // Add logic for checking surrounding tiles to set the text content of clicked
+        if (tileAttributes[i - COLUMNS].bomb == true) {
+          displayNumber += 1;
+        } 
+        if (tileAttributes[i - 1].bomb == true) {
+          displayNumber += 1;
+        } 
+        if (tileAttributes[i - (COLUMNS - 1)].bomb == true) {
+          displayNumber += 1;
+        } 
+        if (tileAttributes[i - (COLUMNS + 1)].bomb == true) {
+          displayNumber += 1;
+        } 
+        if (tileAttributes[i + 1].bomb == true) {
+          displayNumber += 1;
+        }
+        if (tileAttributes[i + (COLUMNS - 1)].bomb == true) {
+          displayNumber += 1;
+        } 
+        if (tileAttributes[i + (COLUMNS + 1)].bomb == true) {
+          displayNumber += 1;
+        } 
+        if (tileAttributes[i + COLUMNS].bomb == true) {
+          displayNumber += 1;
+        }
+      }
     }
   }
+  if (displayNumber == 0) {
+    tile.textContent = "";
+  } else {
+    tile.textContent = displayNumber;
+  }
+  tile.style.color = "black";
 }
 
 // main function to execute the game logic
