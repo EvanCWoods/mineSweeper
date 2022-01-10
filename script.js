@@ -6,11 +6,36 @@ let tileAttributes = [];
 
 // Global variables for query selectors
 let canvas = document.getElementById("canvas");
+let time = document.getElementById("timer");
+
+// Function to handle the timer
+function timer() {
+  let seconds = 0;
+  let minutes = 0;
+
+  let secondsInterval = setInterval(function() {
+    seconds += 1;
+    if (seconds == 60) {
+      seconds = 0;
+    }
+    if (minutes == 0) {
+      time.textContent = seconds;
+    } else {
+      time.textContent = minutes + " : " + seconds;
+    }
+  }, 1000);
+
+  let minutesInterval = setInterval(function() {
+    minutes += 1;
+    time.textContent = minutes + " : " + seconds;
+  }, 60000);
+}
+
 
 //  Function to set whether the tile has a bomb or not (10% chance of being true)
 function hasBomb() {
   let bomb = false;
-  let value = Math.floor(Math.random() * 5);
+  let value = Math.floor(Math.random() * 7);
   if (value == 0) {
     bomb = true;
   }
@@ -89,19 +114,19 @@ function updateTiles(tile) {
         }
       }
     }
+    if (displayNumber == 0) {
+      tile.textContent = "";
+    } else {
+      tile.textContent = displayNumber;
+    } 
+    tile.style.color = "black";
   }
-  if (displayNumber == 0) {
-    tile.textContent = "";
-  } else {
-    tile.textContent = displayNumber;
-  }
-  tile.style.color = "black";
 }
 
 // main function to execute the game logic
 function main() {
   createTiles();
-  console.log(tileAttributes);
+  timer();
 }
 
 main();
