@@ -7,6 +7,8 @@ let tileAttributes = [];
 // Global variables for query selectors
 let canvas = document.getElementById("canvas");
 let time = document.getElementById("timer");
+let startButton = document.getElementById("start");
+
 
 // Function to handle the timer
 function timer() {
@@ -28,6 +30,10 @@ function timer() {
   let minutesInterval = setInterval(function() {
     minutes += 1;
     time.textContent = minutes + " : " + seconds;
+
+    if (minutes == 5) {
+      gameOver(secondsInterval, minutesInterval);
+    }
   }, 60000);
 }
 
@@ -81,12 +87,6 @@ function updateTiles(tile) {
       // Logic for checking what value a tile has (bomb, 0-5)
       if (tile.id === tileAttributes[i].id) {
         console.log(tileAttributes[i]);
-        if (tileAttributes[i-COLUMNS].row >= 0) {
-          if (tileAttributes[i].bomb == true) { 
-            tile.textContent = "💣";
-            alert("Game Over");
-          }
-        }
         // Add logic for checking surrounding tiles to set the text content of clicked
         if (tileAttributes[i - COLUMNS].bomb == true) {
           displayNumber += 1;
@@ -112,21 +112,33 @@ function updateTiles(tile) {
         if (tileAttributes[i + COLUMNS].bomb == true) {
           displayNumber += 1;
         }
+        if (tileAttributes[i].bomb == true) { 
+          tile.textContent = "💣";
+          gameOver();
+        } else if (displayNumber == 0) {
+          tile.textContent = "";
+        } else {
+          tile.textContent = displayNumber;
+        } 
+        tile.style.color = "black";
       }
     }
-    if (displayNumber == 0) {
-      tile.textContent = "";
-    } else {
-      tile.textContent = displayNumber;
-    } 
-    tile.style.color = "black";
   }
 }
 
-// main function to execute the game logic
-function main() {
-  createTiles();
-  timer();
+// Funciton to handle game end
+function gameOver(interval1, interval2) {
+  clearInterval(interval1, interval2);
+  alert("Game Over");
 }
 
-main();
+// Function to start the game
+function startGame() {
+  startButton.addEventListener("click", function() {
+  startButton.style.display = "none";
+  createTiles();
+  timer();  
+  });
+};
+
+startGame();
