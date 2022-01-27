@@ -15,6 +15,9 @@ If a player clicks on a tile with a bomb, the game ends and the player can resta
 
 The aim of the game is to uncover all tiles without bombs under them, and never click on a tile that does contain a bomb.
 
+## Play the game!
+The game is hosted at  https://evancwoods.github.io/mineSweeper/ Have Fun!
+
 
 ## Future Develepments:
 This Version of the game does not have the traditional large scale clearing on the first click but in the future it will be implamented.
