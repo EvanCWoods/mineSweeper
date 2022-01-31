@@ -121,6 +121,7 @@ function updateTiles(tile) {
           tile.textContent = displayNumber;
         } 
         tile.style.color = "black";
+        tile.style.backgroundColor = "white";
       }
     }
   }

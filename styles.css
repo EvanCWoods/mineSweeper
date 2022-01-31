@@ -4,10 +4,13 @@ body {
     justify-content: center;
     height: 100vh;
 }
-
+.btn {
+    border: 1px solid black;
+}
 #canvas {
     position: relative;
     top: 10%;
+    color: rgb(99, 99, 99);
 }
 
 #timer {
